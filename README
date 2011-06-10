@@ -1,0 +1,22 @@
+OBal - options balance
+
+I'm a customer of Interactive Brokers (http://www.interactivebrokers.com/)
+and mainly write options there. To keep track of my profit/loss I wrote OBal
+(short for "options balance").
+
+The software is currently not end-user friendly. You may have to know Perl
+to use it.
+
+import.pl - read orders.csv (Activity Flex - full detail) into database
+script/obal_server.pl - start web application (http://localhost:3000/)
+
+stock-prices.pl has to look like this:
+{MSFT => 24, GOOG => 510};
+
+
+TODO:
+- currency support
+- cash trade support
+- combination support
+- stock prices editable in web frontend
+- import stock prices from Yahoo! or Google Finance

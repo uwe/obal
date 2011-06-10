@@ -1,0 +1,18 @@
+[% USE Komma %]
+
+<table border="1" cellpadding="4" cellspacing="0">
+  <thead>
+    <tr><th>Symbol</th><th>Balance</th><th>Position</th></tr>
+  </thead>
+  <tbody>
+[% FOREACH symbol = BALANCE.keys.sort %]
+    <tr>
+      <td>[% symbol | html %]</td>
+      <td>[% BALANCE.$symbol.money / 100 | komma2 %]</td>
+      <td><pre>[% BALANCE.$symbol.position %]</pre></td>
+    </tr>
+[% END %]
+  </tbody>
+</table>
+
+Gesamt: [% TOTAL / 100 | komma2 %]
