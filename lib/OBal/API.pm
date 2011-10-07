@@ -2,6 +2,8 @@ package OBal::API;
 
 use Moose;
 
+use DateTime;
+
 
 has schema => (is => 'ro', required => 1);
 
@@ -47,6 +49,9 @@ sub by_symbol {
         %position = ();
     }
 
+    # remove expired options
+    _cleanup_expired(\%position);
+
     my $entry = 0;
     if (my $quantity = $position{STK}) {
         # calculate entry price (break even)
@@ -74,5 +79,26 @@ sub _cleanup {
     }
 }
 
+sub _cleanup_expired {
+    my ($pos) = @_;
+
+    my $today = DateTime->today->ymd('-');
+
+    foreach my $type (qw/CALL PUT/) {
+        next unless $pos->{$type};
+
+        my @expiration = keys %{$pos->{$type}};
+        foreach my $expiration (@expiration) {
+            if ($expiration lt $today) {
+                delete $pos->{$type}->{$expiration};
+            }
+        }
+
+        # all options expired?
+        unless (%{$pos->{$type}}) {
+            delete $pos->{$type};
+        }
+    }
+}
 
 1;

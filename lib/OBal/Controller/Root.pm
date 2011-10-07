@@ -35,7 +35,7 @@ sub index :Path :Args(0) {
         $dump =~ s/^\{\n?//;
         $dump =~ s/\n?\}$//;
         $balance{$symbol->name} = {
-            price    => $CURRENT->{$symbol->name} * 100,
+            price    => ($CURRENT->{$symbol->name} || 0) * 100,
             money    => $money,
             entry    => $entry,
             position => $dump,
