@@ -47,11 +47,16 @@ sub by_symbol {
         %position = ();
     }
 
+    my $entry = 0;
     if (my $quantity = $position{STK}) {
+        # calculate entry price (break even)
+        $entry = $money / $quantity;
+
+        # add current price to balance
         $money += $quantity * $price;
     }
 
-    return ($money, \%position);
+    return ($money, \%position, $entry);
 }
 
 sub _cleanup {

@@ -2,14 +2,17 @@
 
 <table border="1" cellpadding="4" cellspacing="0">
   <thead>
-    <tr><th>Symbol</th><th>Balance</th><th>Position</th></tr>
+    <tr><th>Symbol</th><th>Price</th><th>Balance</th><th>Position</th><th>Entry</th></tr>
   </thead>
   <tbody>
 [% FOREACH symbol = BALANCE.keys.sort %]
+[% SET pos = BALANCE.$symbol %]
     <tr>
       <td>[% symbol | html %]</td>
-      <td>[% BALANCE.$symbol.money / 100 | komma2 %]</td>
-      <td><pre>[% BALANCE.$symbol.position %]</pre></td>
+      <td>[% IF pos.price %][% pos.price / 100 | komma2 %][% ELSE %]&nbsp;[% END %]</td>
+      <td>[% pos.money / 100 | komma2 %]</td>
+      <td><pre>[% pos.position %]</pre></td>
+      <td>[% IF pos.entry %][% pos.entry / 100 | komma2 %][% ELSE %]&nbsp;[% END %]</td>
     </tr>
 [% END %]
   </tbody>

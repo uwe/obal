@@ -27,12 +27,17 @@ sub index :Path :Args(0) {
 
     my $total = 0;
     foreach my $symbol (@symbols) {
-        my ($money, $position) = $api->by_symbol($symbol->name, $CURRENT->{$symbol->name});
+        my ($money, $position, $entry) = $api->by_symbol(
+            $symbol->name,
+            $CURRENT->{$symbol->name},
+        );
         my $dump = pp $position;
         $dump =~ s/^\{\n?//;
         $dump =~ s/\n?\}$//;
         $balance{$symbol->name} = {
+            price    => $CURRENT->{$symbol->name} * 100,
             money    => $money,
+            entry    => $entry,
             position => $dump,
         };
         $total += $money;
