@@ -8,7 +8,7 @@
 [% FOREACH symbol = BALANCE.keys.sort %]
 [% SET pos = BALANCE.$symbol %]
     <tr>
-      <td>[% symbol | html %]</td>
+      <td><a href="/[% symbol | uri %]">[% symbol | html %]<a/></td>
       <td>[% IF pos.price %][% pos.price / 100 | komma2 %][% ELSE %]&nbsp;[% END %]</td>
       <td>[% pos.money / 100 | komma2 %]</td>
       <td><pre>[% pos.position %]</pre></td>

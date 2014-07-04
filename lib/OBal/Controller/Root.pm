@@ -46,6 +46,24 @@ sub index :Path :Args(0) {
     $c->stash(BALANCE => \%balance, TOTAL => $total);
 }
 
+sub list :Path :Args(1) {
+    my ($self, $c, $name) = @_;
+
+    my $symbol = $c->model('Options::Symbol')->find({name => $name});
+    unless ($symbol) {
+        $c->response->body( 'Page not found' );
+        $c->response->status(404);
+        return;
+    }
+
+    my @trades = $c->model('Options::Trade')->search(
+        {symbol_id => $symbol->id},
+        {order_by  => 'execution_date'},
+    );
+
+    $c->stash(symbol => $symbol, TRADES => \@trades);
+}
+
 sub default :Path {
     my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );

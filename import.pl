@@ -14,6 +14,7 @@ use OBal::Schema;
 my %ASSET = (
     STK  => \&stock,
     OPT  => \&option,
+    FUT  => \&future,
     CASH => \&cash,
 );
 
@@ -72,6 +73,12 @@ sub option {
         commission      => round($trade->{IBCommission} * 100),
     );
     rs('Trade')->find_or_create(\%data);
+}
+
+sub future {
+    my ($trade) = @_;
+
+    warn "Ignore FUT trade...";
 }
 
 sub cash {

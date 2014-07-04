@@ -1,0 +1,21 @@
+[% USE Komma %]
+
+<p>Symbol: [% symbol.name | html %]</p>
+
+<table border="1" cellpadding="4" cellspacing="0">
+  <thead>
+    <tr><th>Date</th><th>Type</th><th>Exp. Date</th><th>Strike</th><th>Quant.</th><th>Price</th></tr>
+  </thead>
+  <tbody>
+[% FOREACH trade = TRADES %]
+    <tr>
+      <td>[% trade.execution_date.ymd('-')  | html %]</td>
+      <td>[% trade.type                     | html %]</td>
+      <td>[% trade.expiration_date.ymd('-') | html %]</td>
+      <td align="right">[% IF trade.strike %][% trade.strike / 100 | komma2 %][% ELSE %]&nbsp;[% END %]</td>
+      <td align="right">[% trade.quantity                 | html %]</td>
+      <td align="right">[% IF trade.price %][% trade.price / 100 | komma2 %][% ELSE %]&nbsp;[% END %]</td>
+    </tr>
+[% END %]
+  </tbody>
+</table>
